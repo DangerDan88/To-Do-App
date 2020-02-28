@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function ListItem(props) {
-  const [name, done] = props.toDo;
+  const [name, done] = props.todo;
   return (
     <li style={{ textDecoration: done ? "line-through" : "" }}>
       {name}
@@ -10,3 +10,4 @@ export default function ListItem(props) {
     </li>
   );
 }
+
