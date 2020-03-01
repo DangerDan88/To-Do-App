@@ -9,6 +9,12 @@ const tasks = [
   { name: "100 percent on diet", done: false },
   { name: "listen to 3 syntax podcasts a week", done: false }
 ];
+// trying to set up saving state into local storage for persistent data.
+let localList = () => {
+  let localStorageTasks = JSON.parse(localStorage.getItem("tasks"));
+
+  tasks = localStorageTasks;
+};
 
 function ToDoApp() {
   // setting up state here for todos and the inputs and values for todo's
@@ -20,6 +26,8 @@ function ToDoApp() {
     let count = 0;
     todos.map(todo => (todo.done ? count++ : null));
     document.title = `${count} task${count > 1 ? "s" : ""} todo`;
+    localList();
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   });
   // function for handling the submit of the form
   const handleSubmit = e => {
