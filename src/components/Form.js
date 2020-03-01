@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Form(props) {
+  console.log(props);
   return (
     <form onSubmit={props.onSubmit} style={{ paddingLeft: 40, marginTop: 16 }}>
       <input
