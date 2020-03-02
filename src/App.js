@@ -3,39 +3,36 @@ import "./index.css";
 import Form from "./components/Form";
 import ListItem from "./components/ListItem";
 
-// This is my initial monthly tasks
-const tasks = [
+// This is my initial monthly dailyTasks
+let dailyTasks = [
   { name: "Code 1 hour everyday", done: false },
   { name: "100 percent on diet", done: false },
   { name: "listen to 3 syntax podcasts a week", done: false }
 ];
-// trying to set up saving state into local storage for persistent data.
-let localList = () => {
-  let localStorageTasks = JSON.parse(localStorage.getItem("tasks"));
-
-  tasks = localStorageTasks;
-};
 
 function ToDoApp() {
   // setting up state here for todos and the inputs and values for todo's
-  const [todos, settodos] = useState(tasks);
+  const [todos, settodos] = useState(dailyTasks);
   const [inputValue, setInputValue] = useState("");
-
+  // trying to set up saving state into local storage for persistent data.
+  let LocalList = JSON.stringify(localStorage.getItem("todos"));
+  dailyTasks = LocalList;
   // this works essentially the same as componentDidMount or componentDidUpdate
   useEffect(() => {
     let count = 0;
     todos.map(todo => (todo.done ? count++ : null));
     document.title = `${count} task${count > 1 ? "s" : ""} todo`;
-    localList();
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  });
+    localStorage.setItem("todos", todos);
+    // this catch updates the local storage only when a todo changes
+  }, [todos]);
+
   // function for handling the submit of the form
   const handleSubmit = e => {
     e.preventDefault();
     if (inputValue === "") return alert("To do list item requires name:");
     // sets a new array with the start at a default index of [0]
     const newArr = todos.slice();
-    // splice then takes new array we sliced and adds the tasks off inputValue
+    // splice then takes new array we sliced and adds the dailyTasks off inputValue
     newArr.splice(0, 0, { name: inputValue, done: false });
     settodos(newArr);
     setInputValue("");
